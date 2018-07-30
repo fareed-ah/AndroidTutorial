@@ -11,14 +11,20 @@ import java.util.List;
 public interface AlbumContract {
 
     interface View {
+        void displayError(String message);
+
         void displayAlbums(List<Album> myAlbums);
+
         void navigateToPhotoScreen(int albumId);
     }
 
     interface Presenter {
         void getAlbums();
+
         void onAlbumClicked(Album selectedAlbum);
+
         void setView(AlbumContract.View view);
+
         void close();
     }
 }
