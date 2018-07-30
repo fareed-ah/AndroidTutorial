@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="album"
+            type="com.mobile.android.myalbum.model.album.Album" />
+
+        <variable
+            name="presenter"
+            type="com.mobile.android.myalbum.ui.album.AlbumContract.Presenter" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{()->presenter.onAlbumClicked(album)}">
+
+        <TextView
+            android:id="@+id/albumTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:paddingStart="8dp"
+            android:text="@{album.title}"
+            app:layout_constraintBottom_toBottomOf="@+id/albumImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/albumImage"
+            app:layout_constraintTop_toTopOf="@+id/albumImage"
+            tools:text="Bicken's Favourite Album" />
+
+        <ImageView
+            android:id="@+id/albumImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@mipmap/ic_launcher" />
+    </android.support.constraint.ConstraintLayout>
+</layout>
