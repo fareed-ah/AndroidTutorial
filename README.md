@@ -1,8 +1,8 @@
-#Android Design Project
+##Android Design Project
 
 The purpose of the app is to use model view presenter architecture in order to display JSON data. This app also makes use of Fragments and test classes.
 
-### Installing
+## Installing
 
 Get a copy of Android Studio from:
 ```
