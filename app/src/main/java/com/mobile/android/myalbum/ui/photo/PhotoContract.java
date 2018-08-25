@@ -11,5 +11,6 @@ public interface PhotoContract {
 
     interface View {
         void displayPhotos(List<Photo> photos);
+        void displayError(String message);
     }
 }
