@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ import io.reactivex.schedulers.Schedulers;
 public class PostFragment extends Fragment implements PostContract.View {
 
     private PostContract.Presenter presenter;
+    private RecyclerView postRecyclerView;
 
     @Nullable
     @Override
@@ -34,13 +37,15 @@ public class PostFragment extends Fragment implements PostContract.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        postRecyclerView = view.findViewById(R.id.fragmentRecyclerView);
+        postRecyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
         presenter = new PostPresenterImpl(new NetworkManager(), this, Schedulers.io(), AndroidSchedulers.mainThread());
         presenter.getPosts();
     }
 
     @Override
     public void displayPosts(List<Post> postList) {
-        Log.d("Post List: ", postList.toString());
+        postRecyclerView.setAdapter(new PostAdapter(postList));
     }
 
     @Override
