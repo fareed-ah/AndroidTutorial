@@ -13,5 +13,7 @@ public interface PostContract {
 
     interface Presenter {
         void getPosts();
+        void setView(View view);
+        void close();
     }
 }

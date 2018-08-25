@@ -1,7 +1,5 @@
 package com.mobile.android.myalbum.ui.album;
 
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,12 +32,8 @@ public class AlbumFragment extends Fragment implements AlbumContract.View {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Activity activity = getActivity();
-        if (activity != null) {
-            activity.setTitle("Album");
-        }
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
-        return view;
+        requireActivity().setTitle("Album");
+        return inflater.inflate(R.layout.fragment_list, container, false);
     }
 
     @Override
@@ -53,7 +47,7 @@ public class AlbumFragment extends Fragment implements AlbumContract.View {
 
     @Override
     public void displayError(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -7,10 +7,8 @@ import java.util.List;
 
 import io.reactivex.Scheduler;
 import io.reactivex.SingleObserver;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Fareed Ahmad on 2018-07-27.
@@ -56,7 +54,7 @@ public class AlbumPresenterImpl implements AlbumContract.Presenter {
 
                     @Override
                     public void onError(Throwable error) {
-                        if(view != null) {
+                        if (view != null) {
                             view.displayError(error.getMessage());
                         }
                     }
