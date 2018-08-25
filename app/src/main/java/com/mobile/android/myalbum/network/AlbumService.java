@@ -2,6 +2,7 @@ package com.mobile.android.myalbum.network;
 
 import com.mobile.android.myalbum.model.album.Album;
 import com.mobile.android.myalbum.model.photo.Photo;
+import com.mobile.android.myalbum.model.post.Post;
 import com.mobile.android.myalbum.model.user.User;
 
 import java.util.List;
@@ -23,4 +24,7 @@ public interface AlbumService {
 
     @GET("users")
     Single<List<User>> getUsers();
+
+    @GET("posts")
+    Single<List<Post>> getPosts();
 }
