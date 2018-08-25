@@ -3,6 +3,7 @@ package com.mobile.android.myalbum.network;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.mobile.android.myalbum.model.album.Album;
 import com.mobile.android.myalbum.model.photo.Photo;
+import com.mobile.android.myalbum.model.post.Post;
 import com.mobile.android.myalbum.model.user.User;
 
 import java.util.List;
@@ -35,5 +36,9 @@ public class NetworkManager {
 
     public Single<List<User>> getUsers() {
         return albumAPI.getUsers();
+    }
+
+    public Single<List<Post>> getPosts() {
+        return albumAPI.getPosts();
     }
 }
