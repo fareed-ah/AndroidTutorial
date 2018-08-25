@@ -8,6 +8,7 @@ public interface UserContract {
 
     interface View {
         void displayUsers(List<User> users);
+        void displayError(String message);
     }
 
     interface Presenter {

@@ -21,6 +21,11 @@ public class User {
         this.company = company;
     }
 
+    public User() {
+        this(1, "Name", "Username", "awesomeemail@gmail.com",
+                null, "213-323-2323", "mywebsite.com", null);
+    }
+
     public int getId() {
         return id;
     }

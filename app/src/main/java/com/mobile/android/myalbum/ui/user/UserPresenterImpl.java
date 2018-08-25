@@ -7,6 +7,7 @@ import com.mobile.android.myalbum.network.NetworkManager;
 
 import java.util.List;
 
+import io.reactivex.Scheduler;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -16,17 +17,24 @@ public class UserPresenterImpl implements UserContract.Presenter {
 
     private UserContract.View view;
     private NetworkManager networkManager;
+    private Scheduler backgroundScheduler;
+    private Scheduler mainScheduler;
 
-    public UserPresenterImpl(UserContract.View view, NetworkManager networkManager) {
+    public UserPresenterImpl(UserContract.View view,
+                             NetworkManager networkManager,
+                             Scheduler backgroundScheduler,
+                             Scheduler mainScheduler) {
         this.view = view;
         this.networkManager = networkManager;
+        this.backgroundScheduler = backgroundScheduler;
+        this.mainScheduler = mainScheduler;
     }
 
     @Override
     public void getUsers() {
         networkManager.getUsers()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(backgroundScheduler)
+                .observeOn(mainScheduler)
                 .subscribe(new SingleObserver<List<User>>() {
                     @Override
                     public void onSubscribe(Disposable disposable) {
@@ -40,7 +48,7 @@ public class UserPresenterImpl implements UserContract.Presenter {
 
                     @Override
                     public void onError(Throwable error) {
-                        Log.d("Error", "onError: " + error.getMessage());
+                        view.displayError(error.getMessage());
                     }
                 });
     }
