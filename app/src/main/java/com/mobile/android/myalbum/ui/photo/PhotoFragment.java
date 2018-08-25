@@ -10,12 +10,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mobile.android.myalbum.R;
 import com.mobile.android.myalbum.model.photo.Photo;
 import com.mobile.android.myalbum.network.NetworkManager;
 
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class PhotoFragment extends Fragment implements PhotoContract.View {
 
@@ -36,7 +40,7 @@ public class PhotoFragment extends Fragment implements PhotoContract.View {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Activity activity = getActivity();
-        if(activity != null){
+        if (activity != null) {
             activity.setTitle("Photos");
         }
         return inflater.inflate(R.layout.fragment_list, container, false);
@@ -45,7 +49,7 @@ public class PhotoFragment extends Fragment implements PhotoContract.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new PhotoPresenterImpl(this, new NetworkManager());
+        presenter = new PhotoPresenterImpl(this, new NetworkManager(), Schedulers.io(), AndroidSchedulers.mainThread());
         photoRecyclerView = view.findViewById(R.id.fragmentRecyclerView);
         if (getArguments() != null) {
             int albumId = getArguments().getInt(EXTRA_ALBUM_ID, 0);
@@ -56,5 +60,10 @@ public class PhotoFragment extends Fragment implements PhotoContract.View {
     @Override
     public void displayPhotos(List<Photo> photos) {
         photoRecyclerView.setAdapter(new PhotoAdapter(photos));
+    }
+
+    @Override
+    public void displayError(String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 }
