@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mobile.android.myalbum.R;
 import com.mobile.android.myalbum.model.album.Album;
@@ -20,6 +21,9 @@ import com.mobile.android.myalbum.network.NetworkManager;
 import com.mobile.android.myalbum.ui.photo.PhotoFragment;
 
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class AlbumFragment extends Fragment implements AlbumContract.View {
 
@@ -43,8 +47,13 @@ public class AlbumFragment extends Fragment implements AlbumContract.View {
         super.onViewCreated(view, savedInstanceState);
         albumRecyclerView = view.findViewById(R.id.fragmentRecyclerView);
         albumRecyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
-        presenter = new AlbumPresenterImpl(this, new NetworkManager());
+        presenter = new AlbumPresenterImpl(this, new NetworkManager(), Schedulers.io(), AndroidSchedulers.mainThread());
         presenter.getAlbums();
+    }
+
+    @Override
+    public void displayError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
