@@ -26,11 +26,11 @@ public class AlbumPresenterImpl implements AlbumContract.Presenter {
                               NetworkManager networkManager,
                               Scheduler backgroundScheduler,
                               Scheduler mainScheduler) {
+
         this.networkManager = networkManager;
         this.view = view;
         this.mainScheduler = mainScheduler;
         this.backgroundScheduler = backgroundScheduler;
-
         compositeDisposable = new CompositeDisposable();
     }
 
