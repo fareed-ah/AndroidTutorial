@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.mobile.android.myalbum.R;
 import com.mobile.android.myalbum.ui.album.AlbumFragment;
 import com.mobile.android.myalbum.ui.post.PostFragment;
 import com.mobile.android.myalbum.ui.user.UserFragment;

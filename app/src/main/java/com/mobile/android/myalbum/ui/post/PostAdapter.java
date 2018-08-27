@@ -3,10 +3,8 @@ package com.mobile.android.myalbum.ui.post;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.mobile.android.myalbum.R;
 import com.mobile.android.myalbum.databinding.ItemPostBinding;
 import com.mobile.android.myalbum.model.post.Post;
 

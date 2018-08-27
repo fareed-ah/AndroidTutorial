@@ -7,6 +7,7 @@ import java.util.List;
 
 import io.reactivex.Scheduler;
 import io.reactivex.SingleObserver;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 public class PostPresenterImpl implements PostContract.Presenter {
@@ -14,6 +15,7 @@ public class PostPresenterImpl implements PostContract.Presenter {
     private NetworkManager networkManager;
     private PostContract.View view;
     private Scheduler backgroundScheduler, mainScheduler;
+    private CompositeDisposable compositeDisposable;
 
     public PostPresenterImpl(NetworkManager networkManager, PostContract.View view,
                              Scheduler backgroundScheduler, Scheduler mainScheduler) {
@@ -21,6 +23,7 @@ public class PostPresenterImpl implements PostContract.Presenter {
         this.view = view;
         this.backgroundScheduler = backgroundScheduler;
         this.mainScheduler = mainScheduler;
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -31,18 +34,33 @@ public class PostPresenterImpl implements PostContract.Presenter {
                 .subscribe(new SingleObserver<List<Post>>() {
                     @Override
                     public void onSubscribe(Disposable disposable) {
-
+                        compositeDisposable.add(disposable);
                     }
 
                     @Override
                     public void onSuccess(List<Post> posts) {
-                        view.displayPosts(posts);
+                        if (view != null) {
+                            view.displayPosts(posts);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable error) {
-                        view.displayError(error.getMessage());
+                        if (view != null) {
+                            view.displayError(error.getMessage());
+                        }
                     }
                 });
+    }
+
+    @Override
+    public void setView(PostContract.View view) {
+        this.view = view;
+    }
+
+    @Override
+    public void close() {
+        view = null;
+        compositeDisposable.clear();
     }
 }

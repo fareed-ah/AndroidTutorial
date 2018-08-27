@@ -1,11 +1,9 @@
 package com.mobile.android.myalbum.ui.photo;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,10 +37,7 @@ public class PhotoFragment extends Fragment implements PhotoContract.View {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Activity activity = getActivity();
-        if (activity != null) {
-            activity.setTitle("Photos");
-        }
+        requireActivity().setTitle("Photos");
         return inflater.inflate(R.layout.fragment_list, container, false);
     }
 
@@ -65,5 +60,17 @@ public class PhotoFragment extends Fragment implements PhotoContract.View {
     @Override
     public void displayError(String message) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.setView(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.close();
     }
 }
