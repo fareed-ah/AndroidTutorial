@@ -7,6 +7,7 @@ import com.mobile.android.myalbum.ui.photo.dagger.PhotoPresenterModule;
 import com.mobile.android.myalbum.ui.post.PostFragment;
 import com.mobile.android.myalbum.ui.post.dagger.PostPresenterModule;
 import com.mobile.android.myalbum.ui.user.UserFragment;
+import com.mobile.android.myalbum.ui.user.dagger.UserPresenterModule;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -23,6 +24,6 @@ abstract class FragmentBuilderModule {
     @ContributesAndroidInjector(modules = PostPresenterModule.class)
     abstract PostFragment injectPostFragment();
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = UserPresenterModule.class)
     abstract UserFragment injectUserFragment();
 }

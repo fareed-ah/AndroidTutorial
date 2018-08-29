@@ -5,6 +5,8 @@ import com.mobile.android.myalbum.network.NetworkManager;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Scheduler;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
@@ -16,6 +18,7 @@ public class UserPresenterImpl implements UserContract.Presenter {
     private Scheduler backgroundScheduler;
     private Scheduler mainScheduler;
 
+    @Inject
     public UserPresenterImpl(UserContract.View view,
                              NetworkManager networkManager,
                              Scheduler backgroundScheduler,
