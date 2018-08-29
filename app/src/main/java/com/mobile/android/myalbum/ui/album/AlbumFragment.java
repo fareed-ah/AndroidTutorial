@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.mobile.android.myalbum.BaseFragment;
+import com.mobile.android.myalbum.BaseDaggerFragment;
 import com.mobile.android.myalbum.R;
 import com.mobile.android.myalbum.model.album.Album;
 import com.mobile.android.myalbum.network.NetworkManager;
@@ -20,17 +20,22 @@ import com.mobile.android.myalbum.ui.photo.PhotoFragment;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class AlbumFragment extends BaseFragment implements AlbumContract.View {
+public class AlbumFragment extends BaseDaggerFragment implements AlbumContract.View {
 
     private AlbumPresenterImpl presenter;
     private AlbumAdapter albumAdapter;
 
     @BindView(R.id.fragmentRecyclerView)
     RecyclerView albumRecyclerView;
+
+    @Inject
+    NetworkManager networkManager;
 
     @Nullable
     @Override
@@ -43,7 +48,7 @@ public class AlbumFragment extends BaseFragment implements AlbumContract.View {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         albumRecyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
-        presenter = new AlbumPresenterImpl(this, new NetworkManager(), Schedulers.io(), AndroidSchedulers.mainThread());
+        presenter = new AlbumPresenterImpl(this, networkManager, Schedulers.io(), AndroidSchedulers.mainThread());
         presenter.getAlbums();
     }
 

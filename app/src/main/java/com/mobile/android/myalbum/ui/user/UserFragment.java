@@ -9,23 +9,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.mobile.android.myalbum.BaseFragment;
+import com.mobile.android.myalbum.BaseDaggerFragment;
 import com.mobile.android.myalbum.R;
 import com.mobile.android.myalbum.model.user.User;
 import com.mobile.android.myalbum.network.NetworkManager;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class UserFragment extends BaseFragment implements UserContract.View {
+public class UserFragment extends BaseDaggerFragment implements UserContract.View {
 
     private UserContract.Presenter presenter;
 
     @BindView(R.id.fragmentRecyclerView)
     RecyclerView userRecyclerView;
+
+    @Inject
+    NetworkManager networkManager;
 
     @Nullable
     @Override
@@ -38,7 +43,7 @@ public class UserFragment extends BaseFragment implements UserContract.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new UserPresenterImpl(this, new NetworkManager(), Schedulers.io(), AndroidSchedulers.mainThread());
+        presenter = new UserPresenterImpl(this, networkManager, Schedulers.io(), AndroidSchedulers.mainThread());
         userRecyclerView = view.findViewById(R.id.fragmentRecyclerView);
         presenter.getUsers();
     }

@@ -9,24 +9,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.mobile.android.myalbum.BaseFragment;
+import com.mobile.android.myalbum.BaseDaggerFragment;
 import com.mobile.android.myalbum.R;
 import com.mobile.android.myalbum.model.photo.Photo;
 import com.mobile.android.myalbum.network.NetworkManager;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class PhotoFragment extends BaseFragment implements PhotoContract.View {
+public class PhotoFragment extends BaseDaggerFragment implements PhotoContract.View {
 
     public static final String EXTRA_ALBUM_ID = "albumID";
     private PhotoContract.Presenter presenter;
 
     @BindView(R.id.fragmentRecyclerView)
     RecyclerView photoRecyclerView;
+
+    @Inject
+    NetworkManager networkManager;
 
     public static PhotoFragment newInstance(int albumId) {
         Bundle args = new Bundle();
@@ -48,7 +53,7 @@ public class PhotoFragment extends BaseFragment implements PhotoContract.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new PhotoPresenterImpl(this, new NetworkManager(), Schedulers.io(), AndroidSchedulers.mainThread());
+        presenter = new PhotoPresenterImpl(this, networkManager, Schedulers.io(), AndroidSchedulers.mainThread());
         if (getArguments() != null) {
             int albumId = getArguments().getInt(EXTRA_ALBUM_ID, 0);
             presenter.getPhotos(albumId);

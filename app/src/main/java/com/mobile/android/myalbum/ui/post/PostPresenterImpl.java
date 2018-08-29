@@ -17,7 +17,7 @@ public class PostPresenterImpl implements PostContract.Presenter {
     private Scheduler backgroundScheduler, mainScheduler;
     private CompositeDisposable compositeDisposable;
 
-    public PostPresenterImpl(NetworkManager networkManager, PostContract.View view,
+    public PostPresenterImpl(PostContract.View view, NetworkManager networkManager,
                              Scheduler backgroundScheduler, Scheduler mainScheduler) {
         this.networkManager = networkManager;
         this.view = view;
