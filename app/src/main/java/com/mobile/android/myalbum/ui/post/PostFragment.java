@@ -13,25 +13,20 @@ import android.widget.Toast;
 import com.mobile.android.myalbum.BaseDaggerFragment;
 import com.mobile.android.myalbum.R;
 import com.mobile.android.myalbum.model.post.Post;
-import com.mobile.android.myalbum.network.NetworkManager;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class PostFragment extends BaseDaggerFragment implements PostContract.View {
-
-    private PostContract.Presenter presenter;
 
     @BindView(R.id.fragmentRecyclerView)
     RecyclerView postRecyclerView;
 
     @Inject
-    NetworkManager networkManager;
+    PostContract.Presenter presenter;
 
     @Nullable
     @Override
@@ -44,7 +39,6 @@ public class PostFragment extends BaseDaggerFragment implements PostContract.Vie
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         postRecyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
-        presenter = new PostPresenterImpl(this, networkManager, Schedulers.io(), AndroidSchedulers.mainThread());
         presenter.getPosts();
     }
 
