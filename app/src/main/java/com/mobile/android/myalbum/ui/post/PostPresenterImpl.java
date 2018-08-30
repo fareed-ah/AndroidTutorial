@@ -5,6 +5,8 @@ import com.mobile.android.myalbum.network.NetworkManager;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Scheduler;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.CompositeDisposable;
@@ -17,7 +19,8 @@ public class PostPresenterImpl implements PostContract.Presenter {
     private Scheduler backgroundScheduler, mainScheduler;
     private CompositeDisposable compositeDisposable;
 
-    public PostPresenterImpl(NetworkManager networkManager, PostContract.View view,
+    @Inject
+    public PostPresenterImpl(PostContract.View view, NetworkManager networkManager,
                              Scheduler backgroundScheduler, Scheduler mainScheduler) {
         this.networkManager = networkManager;
         this.view = view;

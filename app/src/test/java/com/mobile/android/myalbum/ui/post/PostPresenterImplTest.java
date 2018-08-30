@@ -16,8 +16,6 @@ import java.util.List;
 import io.reactivex.Single;
 import io.reactivex.schedulers.TestScheduler;
 
-import static org.junit.Assert.*;
-
 @RunWith(MockitoJUnitRunner.class)
 public class PostPresenterImplTest {
 
@@ -34,7 +32,7 @@ public class PostPresenterImplTest {
     @Before
     public void setUp() throws Exception {
         testScheduler = new TestScheduler();
-        presenter = new PostPresenterImpl(networkManager, view, testScheduler, testScheduler);
+        presenter = new PostPresenterImpl(view, networkManager, testScheduler, testScheduler);
     }
 
     @Test

@@ -1,17 +1,15 @@
 package com.mobile.android.myalbum.ui.user;
 
-import android.util.Log;
-
 import com.mobile.android.myalbum.model.user.User;
 import com.mobile.android.myalbum.network.NetworkManager;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Scheduler;
 import io.reactivex.SingleObserver;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class UserPresenterImpl implements UserContract.Presenter {
 
@@ -20,6 +18,7 @@ public class UserPresenterImpl implements UserContract.Presenter {
     private Scheduler backgroundScheduler;
     private Scheduler mainScheduler;
 
+    @Inject
     public UserPresenterImpl(UserContract.View view,
                              NetworkManager networkManager,
                              Scheduler backgroundScheduler,

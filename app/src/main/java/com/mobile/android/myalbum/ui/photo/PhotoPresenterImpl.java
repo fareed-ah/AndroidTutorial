@@ -5,6 +5,8 @@ import com.mobile.android.myalbum.network.NetworkManager;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Scheduler;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.CompositeDisposable;
@@ -18,6 +20,7 @@ public class PhotoPresenterImpl implements PhotoContract.Presenter {
     private Scheduler mainScheduler;
     private CompositeDisposable compositeDisposable;
 
+    @Inject
     public PhotoPresenterImpl(PhotoContract.View view,
                               NetworkManager networkManager,
                               Scheduler backgroundScheduler,

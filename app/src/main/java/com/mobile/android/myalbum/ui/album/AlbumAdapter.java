@@ -18,7 +18,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
     private List<Album> myAlbums;
     private AlbumContract.Presenter presenter;
 
-    public AlbumAdapter(List<Album> myAlbums, AlbumPresenterImpl presenter) {
+    public AlbumAdapter(List<Album> myAlbums, AlbumContract.Presenter presenter) {
         this.myAlbums = myAlbums;
         this.presenter = presenter;
     }
