@@ -1,7 +1,7 @@
 package com.mobile.android.myalbum.ui.user;
 
-import com.mobile.android.myalbum.model.user.User;
-import com.mobile.android.myalbum.network.NetworkManager;
+import com.mobile.android.myalbum.database.UserEntity;
+import com.mobile.android.myalbum.database.UserRepository;
 
 import java.util.List;
 
@@ -14,40 +14,40 @@ import io.reactivex.disposables.Disposable;
 public class UserPresenterImpl implements UserContract.Presenter {
 
     private UserContract.View view;
-    private NetworkManager networkManager;
     private Scheduler backgroundScheduler;
     private Scheduler mainScheduler;
+    private UserRepository userRepository;
 
     @Inject
     public UserPresenterImpl(UserContract.View view,
-                             NetworkManager networkManager,
                              Scheduler backgroundScheduler,
-                             Scheduler mainScheduler) {
+                             Scheduler mainScheduler,
+                             UserRepository userRepository) {
         this.view = view;
-        this.networkManager = networkManager;
         this.backgroundScheduler = backgroundScheduler;
         this.mainScheduler = mainScheduler;
+        this.userRepository = userRepository;
     }
 
     @Override
     public void getUsers() {
-        networkManager.getUsers()
+        userRepository.getUsers()
                 .subscribeOn(backgroundScheduler)
                 .observeOn(mainScheduler)
-                .subscribe(new SingleObserver<List<User>>() {
+                .subscribe(new SingleObserver<List<UserEntity>>() {
                     @Override
                     public void onSubscribe(Disposable disposable) {
 
                     }
 
                     @Override
-                    public void onSuccess(List<User> users) {
-                        view.displayUsers(users);
+                    public void onSuccess(List<UserEntity> userEntities) {
+                        view.displayUsers(userEntities);
                     }
 
                     @Override
                     public void onError(Throwable error) {
-                        view.displayError(error.getMessage());
+                        view.displayError("Could not fetch data from the database");
                     }
                 });
     }

@@ -7,7 +7,7 @@
 
         <variable
             name="user"
-            type="com.mobile.android.myalbum.model.user.User" />
+            type="com.mobile.android.myalbum.database.UserEntity" />
     </data>
 
     <android.support.constraint.ConstraintLayout
