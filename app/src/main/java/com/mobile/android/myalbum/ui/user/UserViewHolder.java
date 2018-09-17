@@ -3,6 +3,7 @@ package com.mobile.android.myalbum.ui.user;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.mobile.android.myalbum.database.UserEntity;
 import com.mobile.android.myalbum.databinding.ItemUserBinding;
 import com.mobile.android.myalbum.model.user.User;
 
@@ -14,7 +15,7 @@ public class UserViewHolder extends RecyclerView.ViewHolder {
         super(binding.getRoot());
         this.binding = binding;
     }
-    public void onBind(User user){
+    public void onBind(UserEntity user){
         binding.setUser(user);
         binding.executePendingBindings();
     }

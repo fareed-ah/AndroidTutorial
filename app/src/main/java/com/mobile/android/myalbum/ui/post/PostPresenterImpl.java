@@ -1,6 +1,6 @@
-package com.mobile.android.myalbum.ui.album;
+package com.mobile.android.myalbum.ui.post;
 
-import com.mobile.android.myalbum.model.album.Album;
+import com.mobile.android.myalbum.model.post.Post;
 import com.mobile.android.myalbum.network.NetworkManager;
 
 import java.util.List;
@@ -12,46 +12,38 @@ import io.reactivex.SingleObserver;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-/**
- * Created by Fareed Ahmad on 2018-07-27.
- */
-
-public class AlbumPresenterImpl implements AlbumContract.Presenter {
+public class PostPresenterImpl implements PostContract.Presenter {
 
     private NetworkManager networkManager;
-    private AlbumContract.View view;
+    private PostContract.View view;
+    private Scheduler backgroundScheduler, mainScheduler;
     private CompositeDisposable compositeDisposable;
-    private Scheduler backgroundScheduler;
-    private Scheduler mainScheduler;
 
     @Inject
-    public AlbumPresenterImpl(AlbumContract.View view,
-                              NetworkManager networkManager,
-                              Scheduler backgroundScheduler,
-                              Scheduler mainScheduler) {
-
+    public PostPresenterImpl(PostContract.View view, NetworkManager networkManager,
+                             Scheduler backgroundScheduler, Scheduler mainScheduler) {
         this.networkManager = networkManager;
         this.view = view;
-        this.mainScheduler = mainScheduler;
         this.backgroundScheduler = backgroundScheduler;
+        this.mainScheduler = mainScheduler;
         compositeDisposable = new CompositeDisposable();
     }
 
     @Override
-    public void getAlbums() {
-        networkManager.getAlbums()
+    public void getPosts() {
+        networkManager.getPosts()
                 .subscribeOn(backgroundScheduler)
                 .observeOn(mainScheduler)
-                .subscribe(new SingleObserver<List<Album>>() {
+                .subscribe(new SingleObserver<List<Post>>() {
                     @Override
                     public void onSubscribe(Disposable disposable) {
                         compositeDisposable.add(disposable);
                     }
 
                     @Override
-                    public void onSuccess(List<Album> albums) {
+                    public void onSuccess(List<Post> posts) {
                         if (view != null) {
-                            view.displayAlbums(albums);
+                            view.displayPosts(posts);
                         }
                     }
 
@@ -65,15 +57,8 @@ public class AlbumPresenterImpl implements AlbumContract.Presenter {
     }
 
     @Override
-    public void onAlbumClicked(Album selectedAlbum) {
-        if (view != null) {
-            view.navigateToPhotoScreen(selectedAlbum.getId());
-        }
-    }
-
-    @Override
-    public void setView(AlbumContract.View newView) {
-        view = newView;
+    public void setView(PostContract.View view) {
+        this.view = view;
     }
 
     @Override

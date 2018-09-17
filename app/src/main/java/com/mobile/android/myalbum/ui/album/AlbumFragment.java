@@ -1,11 +1,8 @@
 package com.mobile.android.myalbum.ui.album;
 
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DividerItemDecoration;
@@ -13,38 +10,46 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.mobile.android.myalbum.BaseDaggerFragment;
 import com.mobile.android.myalbum.R;
 import com.mobile.android.myalbum.model.album.Album;
-import com.mobile.android.myalbum.network.NetworkManager;
 import com.mobile.android.myalbum.ui.photo.PhotoFragment;
 
 import java.util.List;
 
-public class AlbumFragment extends Fragment implements AlbumContract.View {
+import javax.inject.Inject;
 
-    private AlbumPresenterImpl presenter;
+import butterknife.BindView;
+
+public class AlbumFragment extends BaseDaggerFragment implements AlbumContract.View {
+
     private AlbumAdapter albumAdapter;
-    private RecyclerView albumRecyclerView;
+
+    @BindView(R.id.fragmentRecyclerView)
+    RecyclerView albumRecyclerView;
+
+    @Inject
+    AlbumContract.Presenter presenter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Activity activity = getActivity();
-        if (activity != null) {
-            activity.setTitle("Album");
-        }
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
-        return view;
+        requireActivity().setTitle("Album");
+        return inflater.inflate(R.layout.fragment_list, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        albumRecyclerView = view.findViewById(R.id.fragmentRecyclerView);
         albumRecyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
-        presenter = new AlbumPresenterImpl(this, new NetworkManager());
         presenter.getAlbums();
+    }
+
+    @Override
+    public void displayError(String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

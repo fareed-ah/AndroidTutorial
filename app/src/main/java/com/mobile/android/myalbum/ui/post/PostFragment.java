@@ -1,8 +1,9 @@
-package com.mobile.android.myalbum.ui.user;
+package com.mobile.android.myalbum.ui.post;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,7 @@ import android.widget.Toast;
 
 import com.mobile.android.myalbum.BaseDaggerFragment;
 import com.mobile.android.myalbum.R;
-import com.mobile.android.myalbum.database.UserEntity;
+import com.mobile.android.myalbum.model.post.Post;
 
 import java.util.List;
 
@@ -19,32 +20,31 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class UserFragment extends BaseDaggerFragment implements UserContract.View {
+public class PostFragment extends BaseDaggerFragment implements PostContract.View {
 
     @BindView(R.id.fragmentRecyclerView)
-    RecyclerView userRecyclerView;
+    RecyclerView postRecyclerView;
 
     @Inject
-    UserContract.Presenter presenter;
+    PostContract.Presenter presenter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        requireActivity().setTitle("Users");
+        requireActivity().setTitle("Posts");
         return inflater.inflate(R.layout.fragment_list, container, false);
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        userRecyclerView = view.findViewById(R.id.fragmentRecyclerView);
-        presenter.getUsers();
+        postRecyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
+        presenter.getPosts();
     }
 
     @Override
-    public void displayUsers(List<UserEntity> users) {
-        userRecyclerView.setAdapter(new UserAdapter(users));
+    public void displayPosts(List<Post> postList) {
+        postRecyclerView.setAdapter(new PostAdapter(postList));
     }
 
     @Override
