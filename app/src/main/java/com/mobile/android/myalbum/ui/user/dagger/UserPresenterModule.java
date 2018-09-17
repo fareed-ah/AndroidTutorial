@@ -1,5 +1,7 @@
 package com.mobile.android.myalbum.ui.user.dagger;
 
+import com.mobile.android.myalbum.database.UserDatabase;
+import com.mobile.android.myalbum.database.UserRepository;
 import com.mobile.android.myalbum.network.NetworkManager;
 import com.mobile.android.myalbum.ui.user.UserContract;
 import com.mobile.android.myalbum.ui.user.UserFragment;
@@ -18,7 +20,12 @@ public abstract class UserPresenterModule {
     abstract UserContract.View bindUserView(UserFragment fragment);
 
     @Provides
-    public static UserContract.Presenter providesUserPresenter(UserContract.View view, NetworkManager networkManager){
-        return new UserPresenterImpl(view,networkManager, Schedulers.io(), AndroidSchedulers.mainThread());
+    public static UserRepository providesUserRepository(NetworkManager networkManager, UserDatabase userDatabase) {
+        return new UserRepository(networkManager,userDatabase);
+    }
+
+    @Provides
+    public static UserContract.Presenter providesUserPresenter(UserContract.View view, UserRepository userRepository) {
+        return new UserPresenterImpl(view, Schedulers.io(), AndroidSchedulers.mainThread(), userRepository);
     }
 }

@@ -1,13 +1,16 @@
 package com.mobile.android.myalbum.model.user;
 
+import com.mobile.android.myalbum.database.UserEntity;
+
 public class User {
+
     private int id;
     private String name;
     private String username;
     private String email;
-    private Address address;
     private String phone;
     private String website;
+    private Address address;
     private Company company;
 
     public User(int id, String name, String username, String email, Address address, String phone, String website, Company company) {
@@ -24,6 +27,11 @@ public class User {
     public User() {
         this(1, "Name", "Username", "awesomeemail@gmail.com",
                 null, "213-323-2323", "mywebsite.com", null);
+    }
+
+    public User(UserEntity userEntity){
+        this(userEntity.getId(),userEntity.getName(),"",
+                userEntity.getEmail(),null,"",userEntity.getEmail(),userEntity.getCompany());
     }
 
     public int getId() {

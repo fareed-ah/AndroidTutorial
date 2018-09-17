@@ -1,13 +1,13 @@
 package com.mobile.android.myalbum.ui.user;
 
-import com.mobile.android.myalbum.model.user.User;
+import com.mobile.android.myalbum.database.UserEntity;
 
 import java.util.List;
 
 public interface UserContract {
 
     interface View {
-        void displayUsers(List<User> users);
+        void displayUsers(List<UserEntity> users);
         void displayError(String message);
     }
 

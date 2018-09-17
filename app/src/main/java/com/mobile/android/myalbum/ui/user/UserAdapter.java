@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.mobile.android.myalbum.database.UserEntity;
 import com.mobile.android.myalbum.databinding.ItemUserBinding;
 import com.mobile.android.myalbum.model.user.User;
 
@@ -12,9 +13,9 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
 
-    private List<User> users;
+    private List<UserEntity> users;
 
-    public UserAdapter(List<User> users) {
+    public UserAdapter(List<UserEntity> users) {
         this.users = users;
     }
 

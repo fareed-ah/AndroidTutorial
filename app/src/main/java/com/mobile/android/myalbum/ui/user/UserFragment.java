@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.mobile.android.myalbum.BaseDaggerFragment;
 import com.mobile.android.myalbum.R;
-import com.mobile.android.myalbum.model.user.User;
+import com.mobile.android.myalbum.database.UserEntity;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class UserFragment extends BaseDaggerFragment implements UserContract.Vie
     }
 
     @Override
-    public void displayUsers(List<User> users) {
+    public void displayUsers(List<UserEntity> users) {
         userRecyclerView.setAdapter(new UserAdapter(users));
     }
 
