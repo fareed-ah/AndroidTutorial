@@ -1,8 +1,8 @@
 ## Android Design Project
 
-The purpose of the app is to use model view presenter architecture in order to display JSON data.
+The purpose of the app is to use model view presenter architecture as well as use industry standard libraries such as RxJava, Room, and Dagger. This allows for the app to have clean maintainable code. To make sure the app is functioning properly I used the Mockito library to write tests for the logic in presenter classes.
 
-The app is divided into fragments each displaying different endpoints of the API. The fragments handle displaying the view and are controlled by a presenter class. This is a good way to make sure classes are independent and have individual responsibilities. Along with fetching data and displaying it the data is also stored in a local database using Room.
+The layout of the app is divided into fragments each displaying different information given by the API. Using MVP architecture the presenter class handles getting data from the model classes and notifies the view (or in this case the fragment) that a change has occurred and the view should be updated. By dividing these tasks between these three different classes ensures that each class is independent and loosely coupled. 
 
 ## Installing
 
