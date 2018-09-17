@@ -1,4 +1,4 @@
-##Android Design Project
+## Android Design Project
 
 The purpose of the app is to use model view presenter architecture in order to display JSON data.
 
