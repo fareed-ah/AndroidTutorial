@@ -32,13 +32,11 @@ public class UserFragment extends BaseDaggerFragment implements UserContract.Vie
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         requireActivity().setTitle("Users");
         return inflater.inflate(R.layout.fragment_list, container, false);
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        userRecyclerView = view.findViewById(R.id.fragmentRecyclerView);
         presenter.getUsers();
     }
 
@@ -50,5 +48,17 @@ public class UserFragment extends BaseDaggerFragment implements UserContract.Vie
     @Override
     public void displayError(String message) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.setView(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.close();
     }
 }

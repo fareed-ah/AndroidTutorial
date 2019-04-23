@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Scheduler;
 import io.reactivex.SingleObserver;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 public class UserPresenterImpl implements UserContract.Presenter {
@@ -17,6 +18,7 @@ public class UserPresenterImpl implements UserContract.Presenter {
     private Scheduler backgroundScheduler;
     private Scheduler mainScheduler;
     private UserRepository userRepository;
+    private CompositeDisposable compositeDisposable;
 
     @Inject
     public UserPresenterImpl(UserContract.View view,
@@ -27,6 +29,7 @@ public class UserPresenterImpl implements UserContract.Presenter {
         this.backgroundScheduler = backgroundScheduler;
         this.mainScheduler = mainScheduler;
         this.userRepository = userRepository;
+        this.compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -37,7 +40,7 @@ public class UserPresenterImpl implements UserContract.Presenter {
                 .subscribe(new SingleObserver<List<UserEntity>>() {
                     @Override
                     public void onSubscribe(Disposable disposable) {
-
+                        compositeDisposable.add(disposable);
                     }
 
                     @Override
@@ -47,8 +50,19 @@ public class UserPresenterImpl implements UserContract.Presenter {
 
                     @Override
                     public void onError(Throwable error) {
-                        view.displayError("Could not fetch data from the database");
+                        view.displayError(error.getLocalizedMessage());
                     }
                 });
+    }
+
+    @Override
+    public void setView(UserContract.View view) {
+        this.view = view;
+    }
+
+    @Override
+    public void close() {
+        view = null;
+        compositeDisposable.clear();
     }
 }

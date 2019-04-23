@@ -13,5 +13,7 @@ public interface UserContract {
 
     interface Presenter {
         void getUsers();
+        void setView(View view);
+        void close();
     }
 }
